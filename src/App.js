@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import LocalRoute from './js/model/LocalRoute';
 import {
+
     FooterComponent
 } from './js/components'
 import {
