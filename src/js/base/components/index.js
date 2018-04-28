@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import BaseColor from '../color';
 
-const base_font_family = '"DFKai-SB", "STKaiti","Microsoft YaHei","黑体","宋体",sans-serif';
+const base_font_family = '""宋体", DFKai-SB", "STKaiti","Microsoft YaHei","黑体",sans-serif';
 const BasePWithFontFamily = styled.p`
     font-family: ${base_font_family};    
 `;

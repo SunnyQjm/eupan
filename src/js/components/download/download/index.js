@@ -19,7 +19,7 @@ const DownloadComponentBody = styled.div`
     @media (max-width: 550px) {
         width: 100%;
     }
-    
+    background-color: white;
 `;
 const Header = styled.div`
     position: relative;
@@ -56,7 +56,7 @@ const Body = styled.div`
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    height: 400px;
+    height: 350px;
 `;
 
 const BodyTitle = styled(GrayP)`
@@ -67,14 +67,14 @@ const BodyInput = styled.input`
     width: 60%;
     border: none;
     text-align: center;
-    background-color: ${BaseColor.color_grey}
+    background-color: ${BaseColor.color_grey};
     padding: 10px;
 `;
 
 const BodyButton = styled(BaseButton)`
     width: 60%;
     padding: 5px;
-    height: 35px;
+    height: 45px;
     border-radius: 35px;
     color: white;
     background: ${BaseColor.color_apptheme};
@@ -82,6 +82,21 @@ const BodyButton = styled(BaseButton)`
 
 
 class DownloadComponent extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.handleDownload = this.handleDownload.bind(this);
+        this.downloadForm = React.createRef();
+    }
+
+    handleDownload(){
+        let {downloadFile} = this.props;
+        let identifyCode = this.codeInput.value;
+        let form = this.downloadForm.current;
+        console.log(identifyCode);
+        console.log(form);
+        downloadFile(identifyCode, form);
+    }
     render() {
         let {width} = this.props;
         return (
@@ -100,8 +115,11 @@ class DownloadComponent extends React.Component {
                 </Header>
                 <Body>
                 <BodyTitle>请输入提取码以提取文件</BodyTitle>
-                <BodyInput placeholder={'在此输入6位提取码'} autoFocus/>
-                <BodyButton bsStyle={'primary'}>提取文件</BodyButton>
+                <BodyInput placeholder={'在此输入6位提取码'} autoFocus innerRef={x => this.codeInput = x}/>
+                <BodyButton bsStyle={'primary'} onClick={this.handleDownload}>提取文件</BodyButton>
+                <form ref={this.downloadForm} target={'upload_target'}/>
+                <iframe name="upload_target" ref={'catch_result'}
+                        style={{height: 0, width: 0}}/>
                 </Body>
             </DownloadComponentBody>
         );

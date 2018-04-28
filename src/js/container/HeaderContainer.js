@@ -12,13 +12,14 @@ import {
     ACTION_TYPE_HEADER_SELECT
 } from '../model/ActionType'
 
+
 export default connect(
     (state) => {
         return {
             ...state.HeaderReducer
         }
     },
-    (dispatch) => {
+    (dispatch, oldProps) => {
         return {
             login: ()=>{
                 dispatch({
@@ -33,7 +34,8 @@ export default connect(
                     type: ACTION_TYPE_HEADER_SELECT,
                     data: selectIndex
                 })
-            }
+            },
+
         }
     },
 )(EupanNav)

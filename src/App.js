@@ -20,7 +20,7 @@ import {
 } from './js/container'
 import styled from 'styled-components';
 import store from './store';
-
+import BaseColor from './js/base/color';
 import {
     Provider
 } from 'react-redux'
@@ -31,6 +31,7 @@ const AppBody = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
+    background-color: ${BaseColor.color_light_grey}
 `;
 
 const FlexFillItem = styled.span`
@@ -40,18 +41,23 @@ const FlexFillItem = styled.span`
 const Header = styled(HeaderContainer)`
     flex: 0 0 auto;
 `;
+
+const FlexSwitch = styled(Switch)`
+    
+`;
 const App = () => (
     <Provider store={store}>
         <Router>
             <AppBody>
                 <Header/>
-                <Switch>
-                    <Route key={'a'} exact path={LocalRoute.HOME} component={DownloadContainer}/>
-                    <Route key={'b'} path={LocalRoute.UPLOAD} component={UploadContainer}/>
-                    <Route key={'c'} path={LocalRoute.SQUARE} component={SquareContainer}/>
-                    <Route key={'d'} path={LocalRoute.FILE_MANAGER} component={FileManagerContainer}/>
-                </Switch>
-                <FlexFillItem/>
+                <FlexFillItem>
+                    <Switch>
+                        <Route key={'a'} exact path={LocalRoute.HOME} component={DownloadContainer}/>
+                        <Route key={'b'} path={LocalRoute.UPLOAD} component={UploadContainer}/>
+                        <Route key={'c'} path={LocalRoute.SQUARE} component={SquareContainer}/>
+                        <Route key={'d'} path={LocalRoute.FILE_MANAGER} component={FileManagerContainer}/>
+                    </Switch>
+                </FlexFillItem>
                 <FooterComponent/>
             </AppBody>
         </Router>

@@ -10,6 +10,9 @@ const RectBg = styled.div`
 
 class FileManagerComponent extends React.Component{
 
+    componentDidMount(){
+
+    }
     render(){
         return (
             <QueueAnim type={'top'}>

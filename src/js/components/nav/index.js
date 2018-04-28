@@ -23,8 +23,8 @@ import logo from '../../../icon/logo.png'
 import styled from 'styled-components'
 import LocalRoute from '../../model/LocalRoute';
 
-const logoWidth = 107;
-const logoHeight = 70;
+const logoWidth = 107 / 1.5;
+const logoHeight = 70 / 1.5;
 const logoMargin = 5;
 const barHeight = logoHeight + 2 * logoMargin;
 

@@ -20,7 +20,7 @@ const FooterBody = styled.div`
 `;
 
 const FooterContract = styled.div`
-    background-color: ${BaseColor.color_light_grey};    
+    background-color: ${BaseColor.color_grey};    
     display: flex;
     justify-content: space-around;
     align-items: center;
