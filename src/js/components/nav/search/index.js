@@ -70,7 +70,7 @@ class SearchInput extends React.Component {
         let closing = this.state.closing;
 
         let iconStyle = (open || closing) ? openIconStyle : this.state.iconHover ? closeIconStyleHover : closeIconStyle;
-        let icon = <i className="fa fa-search mooc-search-icon" style={
+        let icon = <i key={1} className="fa fa-search mooc-search-icon" style={
             iconStyle
         } onMouseEnter={
             this.onIconMouseEnter
@@ -82,7 +82,7 @@ class SearchInput extends React.Component {
         />;
 
         let inputStyle = open ? inputFocus ? onInputFocusStyle : openInputStyle : closing ? openInputStyle : closeInputStyle;
-        let input = <input style={inputStyle} type='search' placeholder={this.props.placeholder}
+        let input = <input key={2} style={inputStyle} type='search' placeholder={this.props.placeholder}
                            className='eupan-search-input' onFocus={this.onInputFocus} onBlur={this.onInputBlur}
                            id='mdzz' autoFocus/>;
         return (

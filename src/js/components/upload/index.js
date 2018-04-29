@@ -1,33 +1,31 @@
 import React from "react";
 
 import styled from 'styled-components';
+import UploadComponent from './upload'
 import QueueAnim from 'rc-queue-anim';
 
-const RectBg = styled.div`
+const UploadPageBody = styled.div`
     width: 100%;
-    height: 500px;
-    background-color: pink;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 `;
-
-
-class UploadComponent extends React.Component {
+class UploadPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            show: true
-        }
     }
 
     render() {
+        // let {selectFile, selectedFiles, handleChange, updateState, showDatePicker, allowDownloadCountInputDisable,
+        //     uploadOptions, uploading} = this.props;
         return (
-            <QueueAnim type={'bottom'}>
-                {this.state.show ? <RectBg key={'bg1'} onClick={() => {
-                        this.setState({show: false})
-                    }}/>
-                    : null}
+            <QueueAnim type={'top'}>
+                <UploadPageBody key={1}>
+                    <UploadComponent key={1} width={774} uploadProps={this.props}/>
+                </UploadPageBody>
             </QueueAnim>
         );
     }
 }
 
-export default UploadComponent
+export default UploadPage

@@ -6,7 +6,7 @@ import lock from '../../../../icon/lock.png';
 import {
     GrayP,
     BasePWithFontFamily,
-    BaseButton,
+    BaseAppThemeButton,
 } from '../../../base/components';
 
 import {
@@ -15,7 +15,7 @@ import {
 import BaseColor from '../../../base/color'
 
 const DownloadComponentBody = styled.div`
-    border: 1px solid ${BaseColor.color_apptheme};
+    // border: 1px solid ${BaseColor.color_apptheme};
     @media (max-width: 550px) {
         width: 100%;
     }
@@ -56,6 +56,7 @@ const Body = styled.div`
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+    padding-top: 30px;
     height: 350px;
 `;
 
@@ -69,15 +70,17 @@ const BodyInput = styled.input`
     text-align: center;
     background-color: ${BaseColor.color_grey};
     padding: 10px;
+    &:focus{
+        outline: 1px solid ${BaseColor.color_apptheme}
+    }
 `;
 
-const BodyButton = styled(BaseButton)`
-    width: 60%;
-    padding: 5px;
-    height: 45px;
-    border-radius: 35px;
-    color: white;
-    background: ${BaseColor.color_apptheme};
+const BodyButton = styled(BaseAppThemeButton)`
+    width: 60% !important;
+    padding: 5px !important;
+    height: 35px !important;
+    border-radius: 35px !important;
+    
 `;
 
 
@@ -117,10 +120,10 @@ class DownloadComponent extends React.Component {
                 <BodyTitle>请输入提取码以提取文件</BodyTitle>
                 <BodyInput placeholder={'在此输入6位提取码'} autoFocus innerRef={x => this.codeInput = x}/>
                 <BodyButton bsStyle={'primary'} onClick={this.handleDownload}>提取文件</BodyButton>
+                </Body>
                 <form ref={this.downloadForm} target={'upload_target'}/>
                 <iframe name="upload_target" ref={'catch_result'}
                         style={{height: 0, width: 0}}/>
-                </Body>
             </DownloadComponentBody>
         );
     }

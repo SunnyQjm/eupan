@@ -4,7 +4,7 @@ import {
     FontSize
 } from '../../base/size'
 import {
-    GrayP,
+    BigTitle,
     LightGayP
 } from '../../base/components'
 import {
@@ -15,11 +15,6 @@ import BaseColor from '../../base/color';
 import DownloadComponent from './download'
 import QueueAnim from 'rc-queue-anim';
 
-const BigTitle = styled(GrayP)`
-    font-size: ${FontSize.FONT_SIZE_SUPER_BIG_TITLE}
-    text-align: center;
-    width: 100%;
-`;
 
 const DownloadPageBody = styled.div`
     display: flex;
@@ -28,7 +23,7 @@ const DownloadPageBody = styled.div`
     padding-top: 30px
     justify-content: center;
     align-items: center;
-    margin-bottom: 40px
+    margin-bottom: 60px
     background-color: ${BaseColor.color_light_grey};
 `;
 
@@ -39,7 +34,7 @@ const CenterNormalP = styled(LightGayP)`
 
 const WaveImg = styled(Image)`
     position: absolute;
-    bottom: -40px;
+    bottom: -60px;
     z-index: -1;
 `;
 

@@ -1,5 +1,5 @@
 import EupanNav from './nav';
-import UploadComponent from './upload';
+import UploadPage from './upload';
 import DownloadPage from './download';
 import SquareComponent from './square';
 import FileManagerComponent from './filemanager';
@@ -8,7 +8,7 @@ import FooterComponent from './footer';
 
 export {
     EupanNav,
-    UploadComponent,
+    UploadPage,
     DownloadPage,
     SquareComponent,
     FileManagerComponent,

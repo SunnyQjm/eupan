@@ -1,6 +1,20 @@
 const baseUrl = 'http://eda.eupan.top:8080/youyun';
 // const baseUrl = 'http://dut.eupan.club:9748/youyun';
-export default {
+const UploadParams={
+    isShare: 'share',
+    leftDownloadCount: 'leftAllowDownloadCount',
+    expireTime: 'expireTime',
+    score: 'score',
+    privateOwn: 'privateOwn',
+    parentId: 'parentId',
+    description: 'description',
+    md5: 'md5',
+    size: 'size',
+    name: 'name',
+    MIME: 'MIME',
+};
+
+const url = {
     baseUrl,
     updateToken: baseUrl + '/updateToken',
 
@@ -33,3 +47,8 @@ export default {
 
     modifyUserInfo: baseUrl + '/authc/user/update',
 };
+
+export {
+    url,
+    UploadParams
+}

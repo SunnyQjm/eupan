@@ -13,7 +13,9 @@ import {
 } from 'react-responsive'
 
 const LightGrayPWithSize = LightGayP.extend`
-    font-size: ${FontSize.FONT_SIZE_FOOTER}
+    font-size: ${FontSize.FONT_SIZE_FOOTER};
+    padding: 5px;
+    margin: 0;
 `;
 
 const FooterBody = styled.div`
@@ -25,8 +27,6 @@ const FooterContract = styled.div`
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    padding-top: 15px ;
-    padding-bottom: 15px 
 `;
 
 const FooterCopyRight = styled.div`

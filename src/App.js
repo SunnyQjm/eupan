@@ -1,4 +1,5 @@
 import React from 'react';
+import es6 from'es6-shim';      //md,有些浏览器还不支持es6
 import './App.css';
 import {
     BrowserRouter as Router,

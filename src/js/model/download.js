@@ -1,5 +1,5 @@
 import axios from 'axios';
-import BaseUrl from './API';
+import {url as BaseUrl} from './API';
 
 
 export function getEncryptMessageBeforeDownload(identifyCode, successCallback, errCallback) {

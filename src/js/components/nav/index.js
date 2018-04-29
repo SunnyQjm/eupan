@@ -129,7 +129,7 @@ class EupanNav extends React.Component {
                         }}/>
                     </MediaQuery>
                     <MediaQuery maxWidth={900}>
-                        <Dropdown noCaret pullRight style={{
+                        <Dropdown id={'drop-down'} noCaret pullRight style={{
                             marginRight: '20px',
                         }}>
                             <Dropdown.Toggle noCaret>
