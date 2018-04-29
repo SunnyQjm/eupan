@@ -9,6 +9,7 @@ const UploadPageBody = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 30px;
+    margin-bottom: 50px;
 `;
 class UploadPage extends React.Component {
     constructor(props) {

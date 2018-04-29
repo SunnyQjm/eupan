@@ -8,6 +8,7 @@ import {
 import BaseColor from '../../../base/color';
 import {Progress, Radio, DatePicker, InputNumber, Input} from 'antd';
 import moment from 'moment'
+import browserMD5File from 'browser-md5-file';
 import {
     Link
 } from 'react-router-dom'
@@ -33,7 +34,6 @@ const CenterGreyP = styled(GreyP)`
 
 const icon_pc = require('../../../../icon/pc.png');
 const UploadDraggerBody = styled.div`
-    height: 240px;
     width: 100%;
     background-color: ${BaseColor.color_light_grey};
     margin: 0 auto;
@@ -47,6 +47,14 @@ const UploadDraggerBody = styled.div`
 const UploadTipDeepLabel = styled(GrayP)`
     text-align: center;
     font-weight: bold;
+`;
+
+const UploadPCAndText = styled.div`
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 `;
 
 const UploadInput = styled.input`
@@ -63,7 +71,7 @@ const ProgressBar = styled.div`
 `;
 
 const UploadFiles = styled(GrayP)`
-    text-align: center;
+    // text-align: center;
 `;
 
 const UploadSettingBody = styled.div`
@@ -85,17 +93,20 @@ const RadioGroup = Radio.Group;
 /////////////////////////////////////////////////////
 ///// Settings
 /////////////////////////////////////////////////////
-const IsPublic = styled.div`
+const SettingOptionItem = styled.div`
+    padding: 5px 0
+`;
+const IsPublic = styled(SettingOptionItem)`
 `;
 
-const ValidTime = styled.div`
+const ValidTime = styled(SettingOptionItem)`
     margin-bottom: 10px;
 `;
 
-const AllowDownloadTime = styled.div`
+const AllowDownloadTime = styled(SettingOptionItem)`
 `;
 
-const Description = styled.div`
+const Description = styled(SettingOptionItem)`
     display: flex;
 `;
 const DescriptionInput = styled(Input.TextArea)`
@@ -128,10 +139,14 @@ class UploadComponent extends React.Component {
 
     handleFileSelect(e) {
         let {selectFile} = this.props.uploadProps;
-        let selectFilePath = e.target.value.trim();
-        console.log('path:' + selectFilePath);
+        let files = this.uploadInput.files;
+        if (files.length <= 0)
+            return;
+        let selectFilePaths = [];
+        for (let i = 0; i < files.length; i++)
+            selectFilePaths.push(files[i].name);
         //发送选择文件事件，
-        selectFile(selectFilePath);
+        selectFile(selectFilePaths);
     }
 
     handleSettingOptionsChange(e) {
@@ -199,12 +214,20 @@ class UploadComponent extends React.Component {
     }
 
 
-    handleUpload(){
-        let uploadFile = this.props.uploadProps;
+    /**
+     * 处理上传操作
+     */
+    handleUpload() {
+        let {uploadFile} = this.props.uploadProps;
+        let files = this.uploadInput.files;
 
+        let params = this.props.uploadProps.uploadOptions;
+        uploadFile(files, params);
     }
+
     render() {
-        let {width, selectedFiles, showDatePicker, allowDownloadCountInputDisable, uploadOptions, uploading} = this.props.uploadProps;
+        let {width, selectedFiles, showDatePicker, allowDownloadCountInputDisable, uploadOptions, uploading,
+            uploadProgress} = this.props.uploadProps;
         console.log('selectFiles: ' + selectedFiles);
         return (
             <UploadComponentBody style={{
@@ -213,22 +236,30 @@ class UploadComponent extends React.Component {
                 <UploadLabel>上传</UploadLabel>
                 <CenterGreyP>你还未登陆，点此 <Link to='#'>登陆上传</Link></CenterGreyP>
                 <UploadDraggerBody>
-                    <img src={icon_pc}/>
-                    <UploadTipDeepLabel>支持文件拖拽上传</UploadTipDeepLabel>
-                    <UploadInput type={'file'} onChange={this.handleFileSelect}/>
+                    <UploadPCAndText>
+                        <img src={icon_pc}/>
+                        <UploadTipDeepLabel>支持文件拖拽上传</UploadTipDeepLabel>
+                    </UploadPCAndText>
+                    <UploadInput type={'file'} multiple onChange={this.handleFileSelect} innerRef={x => {
+                        this.uploadInput = x;
+                    }}/>
                     <ProgressBar>
-                        <UploadFiles>
-                            {selectedFiles.toString()}
-                        </UploadFiles>
-                        <Progress percent={50} status="active" width={50} strokeWidth={15}/>
+                        {
+                            selectedFiles.map((file, index) => {
+                                return (
+                                    <div>
+                                        <Progress percent={uploadProgress[index]} width={50} strokeWidth={15}/>
+                                        <UploadFiles>{file}</UploadFiles>
+                                    </div>
+                                )
+                            })
+                        }
                     </ProgressBar>
-
-                    {/*</ProgressBar>*/}
                 </UploadDraggerBody>
                 <UploadSettingBody>
                     <UploadSettingText>上传设置</UploadSettingText>
                     <IsPublic>
-                        <RadioGroup name={UploadParams.isShare} defaultValue={true}
+                        <RadioGroup name={UploadParams.share} defaultValue={true}
                                     onChange={this.handleSettingOptionsChange}>
                             <BoldText>是否分享到广场</BoldText>
                             <MyRadio value={true}>是</MyRadio>
@@ -239,9 +270,9 @@ class UploadComponent extends React.Component {
                         <RadioGroup name={UploadParams.expireTime} defaultValue={-1}
                                     onChange={this.handleExpireTimeChange}>
                             <BoldText>有效时间</BoldText>
-                            <MyRadio value={24 * 60 * 60 * 1000}>一天</MyRadio>
-                            <MyRadio value={24 * 60 * 60 * 1000 * 7}>一周</MyRadio>
-                            <MyRadio value={24 * 60 * 60 * 1000 * 30}>30天</MyRadio>
+                            <MyRadio value={24 * 60 * 60 * 1000 + (new Date()).getTime()}>一天</MyRadio>
+                            <MyRadio value={24 * 60 * 60 * 1000 * (new Date()).getTime()}>一周</MyRadio>
+                            <MyRadio value={24 * 60 * 60 * 1000 * (new Date()).getTime()}>30天</MyRadio>
                             <MyRadio value={-1}>永久</MyRadio>
                             <br/>
                             <BoldText/>
@@ -261,7 +292,7 @@ class UploadComponent extends React.Component {
                         </RadioGroup>
                     </ValidTime>
                     <AllowDownloadTime>
-                        <RadioGroup name={UploadParams.leftDownloadCount} defaultValue={-1}
+                        <RadioGroup name={UploadParams.leftAllowDownloadCount} defaultValue={-1}
                                     onChange={this.handleAllowDownloadCountChange}>
                             <BoldText>允许下载次数</BoldText>
                             <MyRadio value={1}>一次</MyRadio>
@@ -278,9 +309,7 @@ class UploadComponent extends React.Component {
                     </Description>
                 </UploadSettingBody>
                 <UploadButton loading={uploading} disabled={selectedFiles.length === 0}
-                              onClick={() => {
-                                  alert('click')
-                              }}>上传</UploadButton>
+                              onClick={this.handleUpload}>上传</UploadButton>
             </UploadComponentBody>
         );
     }
