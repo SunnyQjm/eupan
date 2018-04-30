@@ -1,14 +1,14 @@
 import React from "react";
 import styled from 'styled-components';
-import QueueAnim from 'rc-queue-anim';
 import SquareItem from './squire_item';
 import {BigTitleP, GrayP, TextGrayP} from "../../base/components";
 import {FontSize} from '../../base/size'
 import BaseColor from '../../base/color'
 import WaterFlow from './WaterFlow';
 import MediaQuery from 'react-responsive'
-
-const $ = require('jquery');
+import {
+    message
+} from 'antd';
 
 const SquareComponentBody = styled.div`
 `;
@@ -38,68 +38,109 @@ const SquareItemsBody = styled.div`
 `;
 
 class SquareComponent extends React.Component {
+
     constructor(props) {
         super(props);
-        this.scrollListener = this.scrollListener.bind(this);
-        this.loadMore = this.loadMore.bind(this);
-        this.changeState = this.changeState.bind(this);
-        this.allowLoadmore = true;
+        this.downFile = this.downFile.bind(this);
+        this.tryLoadMore = this.tryLoadMore.bind(this);
+        this.downloadForm = React.createRef();
+        this.loading = false;
     }
 
-    scrollListener(e) {
-        let lastElement = $('.square-item:last')[0];
-        if (!lastElement)
-            return;
-        let itemBottom = lastElement.offsetTop + lastElement.offsetHeight;
-        let t = document.documentElement.scrollTop || document.body.scrollTop;
-        t = t + (document.documentElement.clientHeight || document.body.clientHeight);
-        if (itemBottom <= t && this.props.allowLoadMore && this.allowLoadmore) {
-            this.changeState(false);
+    componentDidMount() {
+        let {load} = this.props;
+        load(this.props, true);
+        let t;
+        EventUtil.addHandler(window, 'scroll', (e) => {
+            if(!!t)
+                clearTimeout(t);
+            t = setTimeout(() => {
+                this.tryScrollLoadMore();
+            }, 100);
+        })
+    }
+
+
+    componentWillUnmount() {
+        EventUtil.removeHandler(window, 'scroll')
+    }
+
+    /**
+     * 判断是否加载更多数据，在最后一个元素显示出来的时候，就需要
+     * @returns {boolean}
+     */
+    judgeIsNeedLoadMore() {
+        if (!this.props.loading && !this.loading && !!this.lastItem
+            && !!this.squareBody && !!this.squareItemsBody && !this.props.loading) {
+            let visibleBottom = document.documentElement.scrollTop || document.body.scrollTop;
+            visibleBottom += (document.documentElement.clientHeight || document.body.clientHeight);
+            let lastItemTop = this.lastItem.offsetTop + this.squareBody.offsetTop + this.squareItemsBody.offsetTop;
+            return (visibleBottom > lastItemTop);
+        }
+        return false;
+    }
+
+    async loadMore() {
+        let {load, page, size, hot, time} = this.props;
+        page += 1;
+        await load({page, size, hot, time}, false);
+    }
+
+    tryScrollLoadMore() {
+        if(this.judgeIsNeedLoadMore()){
+            this.loading = true;
             this.loadMore();
         }
     }
 
-    loadMore() {
-        if (this.props.allowLoadMore) {
-            let {loadMore_} = this.props;
-            loadMore_(this.props);
+    tryLoadMore() {
+        if (this.judgeIsNeedLoadMore()) {
+            this.loading = true;
+            this.loadMore();
         }
     }
 
-    componentDidMount() {
-        let {firstLoading} = this.props;
-        firstLoading(this.props);
-        window.addEventListener('scroll', this.scrollListener);
+    componentDidUpdate(preProps, preState, snap) {
+        this.tryLoadMore();
+        this.loading = this.props.loading;
     }
 
-    changeState(loadMore) {
-        this.allowLoadmore = loadMore;
-    }
-
-    componentDidUpdate() {
-        if (this.props.changing) {
-            this.componentDidMount();
-            this.changeState(true);
-        }
+    downFile(identifyCode) {
+        let {downloadFile} = this.props;
+        downloadFile(identifyCode, this.downloadForm.current);
     }
 
     render() {
-        let {data, showFile} = this.props;
+        let {files, showFile} = this.props;
         let listItems;
-        if (!!data) {
-            listItems = data.map((item, index) =>
+        if (!!files) {
+            listItems = files.map((item, index) =>
                 !item ? null :
                     <SquareItem className={'square-item'} key={item.id}
-                                fileInfo={item} showFile={showFile} width={350}/>
+                                fileInfo={item} showFile={showFile} width={350}
+                                downloadFile={this.downFile}
+                                innerRef={x => {
+                                    this.lastItem = x;
+                                    if (index === files.length - 1) {
+                                        this.tryLoadMore();
+                                    }
+                                }}/>
             );
         }
         return (
-            <SquareComponentBody>
+            <SquareComponentBody innerRef={x => {
+                this.squareBody = x;
+            }}>
+                <form ref={this.downloadForm} target={'download_target'}/>
+                <iframe name="download_target" ref={'catch_result'}
+                        style={{height: 0, width: 0}}/>
                 <CategoryBody>
                     <CategoryItemText>全部</CategoryItemText>
                     <CategoryItemText>热门</CategoryItemText>
                 </CategoryBody>
-                <SquareItemsBody>
+                <SquareItemsBody innerRef={x => {
+                    this.squareItemsBody = x;
+                }}>
                     <MediaQuery minWidth={1680}>
                         <WaterFlow column={4}>
                             {!!listItems && listItems}
@@ -120,5 +161,25 @@ class SquareComponent extends React.Component {
         );
     }
 }
+
+const EventUtil = {
+    addHandler: function (element, type, handler) {
+        if (element.addEventListener)
+            element.addEventListener(type, handler, false);
+        else if (element.attachEvent)
+            element.attachEvent("on" + type, handler);
+        else
+            element["on" + type] = handler;
+    },
+    removeHandler: function (element, type, handler) {
+        if (element.removeEventListener)
+            element.removeEventListener(type, handler, false);
+        else if (element.detachEvent)
+            element.detachEvent("on" + type, handler);
+        else
+            element["on" + type] = handler;
+    },
+};
+
 
 export default SquareComponent;

@@ -1,3 +1,7 @@
+import axios from 'axios';
+import {
+    message
+} from 'antd'
 import {
     getEncryptMessageBeforeDownload,
     downloadFile
@@ -6,7 +10,6 @@ import {
 import {
     getmd5,
     getUploadParamBody,
-    checkUploadFile,
     uploadFile
 } from './upload'
 import {
@@ -16,12 +19,25 @@ import {
     getFollowUserShareFiles
 } from './FileForum';
 
+/**
+ * 对错误进行统一处理
+ */
+axios.interceptors.response.use(response => {
+    if (response.data.success) {
+        return response.data.data;
+    } else {
+        if (!!response.data.data)
+            message.info(response.data.data);
+    }
+}, error => {
+    message.error(error.message);
+});
+
 export {
     getEncryptMessageBeforeDownload,
     downloadFile,
     getmd5,
     getUploadParamBody,
-    checkUploadFile,
     uploadFile,
     getComments,
     getFileDetail,

@@ -3,25 +3,32 @@ import {UploadParams, url} from './API'
 import {getMyMIME} from './FileUtil'
 import axios from 'axios';
 
-export async function checkUploadFile(body) {
+function checkUploadFile(body) {
     return axios.post(url.uploadCheck, body)
-        .then(response => {
-            return response.data;
-        })
 }
 
+/**
+ * 上传文件
+ * 返回：
+        {
+            identifyCode: "362ivc"
+        }
+ * @param file                  要上传的文件对象
+ *
+ * @param paramBody             上传参数
+ * @see getUploadParamBody
+ *
+ * @param progressCallback
+ * @returns {Promise<any>}
+ */
 export async function uploadFile(file, paramBody, progressCallback) {
     return new Promise((resolve, reject) => {
         let result = checkUploadFile(paramBody);
-        result.then((result) => {
-            console.log(result);
-            if(!result.success)
-                return;
-            if(result.data.redundancy){      //是否冗余，如果冗余，则表示秒传
+        result.then((data) => {
+            if(data.redundancy){      //是否冗余，如果冗余，则表示秒传
                 progressCallback(100);       //设置进度为下载完成
                 resolve({
-                    data: result.data.identifyCode,
-                    success: true
+                    identifyCode: data.identifyCode
                 })
             } else {        //并非冗余，则开始上传
                 let formData = new FormData();
@@ -33,8 +40,10 @@ export async function uploadFile(file, paramBody, progressCallback) {
                     onUploadProgress: function (progressEvent) {
                         progressCallback(progressEvent.loaded * 100 / progressEvent.total)
                     }
-                }).then(response => {
-                    resolve(response.data);
+                }).then(data => {
+                    resolve({
+                        identifyCode: data
+                    });
                 }).catch(err => {
                     reject(err);
                 })
@@ -46,6 +55,12 @@ export async function uploadFile(file, paramBody, progressCallback) {
 
 }
 
+/**
+ * 计算md5，构建文件上传请求体
+ * @param file
+ * @param params
+ * @returns {Promise<void>}
+ */
 export async function getUploadParamBody(file, params) {
     let uploadBody = {};
     console.log(params);
@@ -64,6 +79,12 @@ export async function getUploadParamBody(file, params) {
     uploadBody[UploadParams.MIME] = getMyMIME(file.type);
     return uploadBody;
 }
+
+/**
+ * 获取文件的md5
+ * @param file
+ * @returns {Promise<any>}
+ */
 export async function getmd5(file) {
     return await new Promise((resolve, reject) => {
         browserMD5File(file, (err, md5) => {

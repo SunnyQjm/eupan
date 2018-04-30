@@ -19,6 +19,7 @@ const pdf = require('../../icon/90x90/pdf.png');
 const ppt = require('../../icon/90x90/ppt.png');
 const code = require('../../icon/90x90/code.png');
 const file = require('../../icon/90x90/file.png');
+const picture = require('../../icon/90x90/picture.png');
 
 
 function getIconByMIME(MIME) {
@@ -27,7 +28,6 @@ function getIconByMIME(MIME) {
             return apk;
         case MIME_CODE:
             return code;
-
         case MIME_MUSIC:
             return music;
         case MIME_PDF:
@@ -41,6 +41,7 @@ function getIconByMIME(MIME) {
         case MIME_ZIP:
             return zip;
         case MIME_PICTURE:
+            return picture;
         case MIME_EXCEL:
         case MIME_OTHER:
         default:

@@ -6,12 +6,12 @@ import {
 
 export async function getForumFiles(data) {
 	let url = ROUTE.forumFiles + `?page=${data.page}&size=${data.size}&time=${data.time}&hot=${data.hot}`;
-	return await axios.get(url)
-		.then(function (response) {
-			return response.data;
+	return axios.get(url)
+		.then(function (data) {
+			return data;
 		})
-		.catch(function () {
-
+		.catch(function (err) {
+			console.log(err);
 		});
 }
 

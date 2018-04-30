@@ -5,13 +5,10 @@ import {
     SquareComponent
 } from '../components'
 import {
-    ACTION_TYPE_SQUARE_SHOW_FILE,
     ACTION_TYPE_SQUARE_LOAD_FINISH,
-    ACTION_TYPE_SQUARE_LOAD_MORE_FINISH,
-    ACTION_TYPE_SQUARE_LOAD_MORE,
     ACTION_TYPE_SQUARE_LOAD
 } from '../model/ActionType'
-import {getForumFiles, getFollowUserShareFiles} from '../model/EupanApi';
+import {getForumFiles, getFollowUserShareFiles, downloadFile as DownloadFileApi} from '../model/EupanApi';
 
 
 export default connect(
@@ -22,58 +19,32 @@ export default connect(
     },
     (dispatch) => {
         return {
-            firstLoading: async (data) => {
-                if(!data)
-                    return;
+            downloadFile: (identifyCode, form) => {
+                DownloadFileApi(identifyCode, form, () => {
+                    console.log('download success');
+                }, (msg) => {
+                    console.log('download err: ' + msg);
+                })
+            },
+            load: async (data, isRefresh) => {
+                //发送开始加载事件
                 dispatch({
                     type: ACTION_TYPE_SQUARE_LOAD,
+                    isRefresh: isRefresh,
                 });
-                let requestData = Object.assign({}, data);
-                Object.assign(requestData, {
-                    page: 1
-                });
-                let res;
-                if(data.isFollow){
-                    res = await getFollowUserShareFiles(requestData);
-                } else {
-                    res = await getForumFiles(requestData);
+                let {page, size, hot, time} = data;
+                if (isRefresh) {
+                    page = 1;
                 }
-                console.log(res);
-                dispatch({
-                    type: ACTION_TYPE_SQUARE_LOAD_FINISH,
-                    data: res
-                });
-            },
-            showFile: (data) => {
-                dispatch({
-                    type: ACTION_TYPE_SQUARE_SHOW_FILE,
-                    data
-                });
-            },
-            loadMore_: async (data) => {
-                if(!data)
-                    return;
-                dispatch({
-                    type: ACTION_TYPE_SQUARE_LOAD_MORE
-                });
-                let requestData = Object.assign({}, data);
-                console.log(requestData);
-                Object.assign(requestData, {
-                    page: (data.page + 1) ? data.page + 1 : 1
-                });
-                let res;
-                if(data.isFollow){
-                    res = await getFollowUserShareFiles(requestData);
-                } else {
-                    res = await getForumFiles(requestData);
-                }
-                if(res.success){	//获取成功
+                let files = await getForumFiles({page, size, hot, time});
+                if (!!files) {
                     dispatch({
-                        type: ACTION_TYPE_SQUARE_LOAD_MORE_FINISH,
-                        data: res.data
-                    });
+                        type: ACTION_TYPE_SQUARE_LOAD_FINISH,
+                        data: files,
+                        isRefresh: isRefresh
+                    })
                 }
-            }
+            },
         }
     },
 )(SquareComponent)

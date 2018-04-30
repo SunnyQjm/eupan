@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {
     BaseGrayTitle, GrayP, GreyP, LitleTextGrayP, TextGrayP
 } from '../../../base/components'
+import BaseColor from '../../../base/color'
 import {
     Image
 } from 'react-bootstrap'
@@ -39,12 +40,18 @@ const FileTitleAndDescription = styled.div`
 `;
 const FileNameText = styled(BaseGrayTitle)`
     font-weight: bold;
+    &: hover{
+        cursor: pointer;
+        color: ${BaseColor.color_apptheme}
+    }
 `;
 const FileDescription = styled(TextGrayP)`
+    margin-top: 10px;
 `;
 
 const FileContentBody = styled.div`
     display: flex;
+    
 `;
 
 const FileOwnerInfo = styled.div`
@@ -76,12 +83,23 @@ const FileDataInfo = styled.div`
 `;
 
 class SquireItem extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.downFile = this.downFile.bind(this);
+    }
+
+
+    downFile(){
+        let {downloadFile, fileInfo} = this.props;
+        downloadFile(fileInfo.identifyCode);
+    }
     render() {
-        let {width, fileInfo} = this.props;
+        let {width, fileInfo, innerRef} = this.props;
         return (
             <SquireItemBody style={{
                 width: width
-            }} className={this.props.className}>
+            }} className={this.props.className} innerRef={innerRef}>
                 <FileContentBody>
                     <FileTypeIcon
                         responsive
@@ -106,11 +124,11 @@ class SquireItem extends React.Component {
                 <FileCreateTime>{new Date(fileInfo.createTime).toLocaleTimeString()}</FileCreateTime>
                 <FileDataInfo>
                     <LitleTextGrayP>
-                        <a href="#">赞</a>(100)
+                        <a>赞</a>({fileInfo.star})
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a href="#">评论</a>(2)
+                        <a>评论</a>(2)
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a href="#">下载</a>(50)
+                        <a onClick={this.downFile}>下载</a>({fileInfo.downloadCount})
                     </LitleTextGrayP>
                 </FileDataInfo>
             </SquireItemBody>

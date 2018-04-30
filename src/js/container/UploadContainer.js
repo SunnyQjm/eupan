@@ -58,17 +58,17 @@ export default connect(
                 });
                 for (let i = 0; i < files.length; i++) {
                     let paramBody = await getUploadParamBody(files[i], params);
-                    console.log(paramBody);
                     uploadFile(files[i], paramBody, progress => {       //进度回调
                         dispatch({
                             type: ACTION_TYPE_UPLOAD_PROGRESS,
                             data: progress.toFixed(2),
                             index: i
                         });
-                    }).then(response => {
+                    }).then(data => {
+                        console.log(data);
                         dispatch({
                             type: ACTION_TYPE_UPLOAD_SUCCESS,
-                            data: response,
+                            data: data,
                         })
                     }).catch(err => {
                         dispatch({

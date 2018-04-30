@@ -15,10 +15,7 @@ import {
 import BaseColor from '../../../base/color'
 
 const DownloadComponentBody = styled.div`
-    // border: 1px solid ${BaseColor.color_apptheme};
-    @media (max-width: 550px) {
-        width: 100%;
-    }
+    width: 550px;
     background-color: white;
 `;
 const Header = styled.div`
@@ -96,8 +93,6 @@ class DownloadComponent extends React.Component {
         let {downloadFile} = this.props;
         let identifyCode = this.codeInput.value;
         let form = this.downloadForm.current;
-        console.log(identifyCode);
-        console.log(form);
         downloadFile(identifyCode, form);
     }
     render() {

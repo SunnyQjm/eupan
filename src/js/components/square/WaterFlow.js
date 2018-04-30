@@ -18,9 +18,8 @@ export default class WaterFlow extends React.Component {
     render() {
         let {column} = this.props;
         let columns = [];
-        console.log(this.props.children.length);
         React.Children.map(this.props.children, (child, index) => {
-            if(columns[index % column]){
+            if (columns[index % column]) {
                 columns[index % column].push(child);
             } else {
                 columns[index % column] = [];
@@ -28,7 +27,6 @@ export default class WaterFlow extends React.Component {
             }
         });
         let childs = columns.map((value, index) => {
-            console.log(value.length);
             return (
                 <Column key={index} type={'bottom'}>
                     {value}
@@ -36,15 +34,13 @@ export default class WaterFlow extends React.Component {
             )
         });
         return (
-            <WaterFlowBody innerRef={x => {
-                this.waterFlowBody = x;
-            }} onChange={this.onWaterFlowBodyInsert} type={'left'}>
-                    {childs}
+            <WaterFlowBody>
+                {childs}
             </WaterFlowBody>
         );
     }
 }
 
-WaterFlow.propTypes={
+WaterFlow.propTypes = {
     column: PropTypes.number
 };

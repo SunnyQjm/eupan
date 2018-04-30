@@ -4,16 +4,8 @@ import {url as BaseUrl} from './API';
 
 export function getEncryptMessageBeforeDownload(identifyCode, successCallback, errCallback) {
     axios.get(`${BaseUrl.getMessageBeforeDownload}/${identifyCode}`)
-        .then(response => {
-            console.log(response.data);
-            return response.data;
-        })
-        .then(result => {
-            if(!!result && result.success && !!result.data){
-                successCallback(result.data);
-            } else {
-                errCallback(result.msg);
-            }
+        .then(msg => {
+            successCallback(msg);
         })
         .catch(reason => {
             errCallback(reason.toString())
