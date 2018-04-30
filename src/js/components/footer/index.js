@@ -13,7 +13,7 @@ import {
 } from 'react-responsive'
 
 const LightGrayPWithSize = LightGayP.extend`
-    font-size: ${FontSize.FONT_SIZE_FOOTER};
+    font-size: ${FontSize.FONT_SIZE_LITTLE};
     padding: 5px;
     margin: 0;
 `;
@@ -35,7 +35,7 @@ const FooterCopyRight = styled.div`
     color: white;
     padding-top: 15px ;
     padding-bottom: 15px 
-    font-size: ${FontSize.FONT_SIZE_FOOTER}
+    font-size: ${FontSize.FONT_SIZE_LITTLE}
 `;
 
 class FooterComponent extends React.Component {

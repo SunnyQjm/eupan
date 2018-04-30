@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import {
-    BigTitle,
+    BigTitleP,
     GreyP, GrayP,
     BaseAppThemeButton
 } from '../../../base/components'
@@ -25,7 +25,7 @@ const UploadComponentBody = styled.div`
     flex-direction: column;
 `;
 
-const UploadLabel = styled(BigTitle)`
+const UploadLabel = styled(BigTitleP)`
 `;
 const CenterGreyP = styled(GreyP)`
     text-align: center;
@@ -35,6 +35,7 @@ const CenterGreyP = styled(GreyP)`
 const icon_pc = require('../../../../icon/pc.png');
 const UploadDraggerBody = styled.div`
     width: 100%;
+    min-height: 240px;
     background-color: ${BaseColor.color_light_grey};
     margin: 0 auto;
     display: flex;

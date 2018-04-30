@@ -19,6 +19,7 @@ initUploadOptions[UploadParams.score] = 0;
 const initState={
     selectedFiles: [],
     uploadProgress: [],
+
     uploadOptions: initUploadOptions,
     showDatePicker: false,
     allowDownloadCountInputDisable: true,

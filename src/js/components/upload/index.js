@@ -3,6 +3,7 @@ import React from "react";
 import styled from 'styled-components';
 import UploadComponent from './upload'
 import QueueAnim from 'rc-queue-anim';
+import BaseColor from "../../base/color";
 
 const UploadPageBody = styled.div`
     width: 100%;
@@ -10,6 +11,7 @@ const UploadPageBody = styled.div`
     justify-content: center;
     margin-top: 30px;
     margin-bottom: 50px;
+    background-color: ${BaseColor.color_light_grey};
 `;
 class UploadPage extends React.Component {
     constructor(props) {

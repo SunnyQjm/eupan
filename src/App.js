@@ -36,6 +36,7 @@ const AppBody = styled.div`
 `;
 
 const FlexFillItem = styled.span`
+    background-color: ${BaseColor.color_light_grey}
     flex: 1;
 `;
 

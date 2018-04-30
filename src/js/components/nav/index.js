@@ -32,7 +32,7 @@ const barHeight = logoHeight + 2 * logoMargin;
 /////// css in js
 ///////////////////////////////////////////////////////////////////////////////
 const MyNav = styled.div`
-    margin-left: 30px;
+    // margin-left: 30px;
     height: ${barHeight}px
 `;
 
@@ -75,7 +75,7 @@ const NavBarContainer = styled.div`
     justify-content: space-around;
     padding-left: 10px;
     padding-right: 10px;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     background-color: white;
     box-shadow: 0 0.8px ${BaseColor.color_light_gray}
 `;

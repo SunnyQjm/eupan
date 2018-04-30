@@ -68,7 +68,7 @@ const BodyInput = styled.input`
     width: 60%;
     border: none;
     text-align: center;
-    background-color: ${BaseColor.color_grey};
+    background-color: ${BaseColor.color_light_grey};
     padding: 10px;
     &:focus{
         outline: 1px solid ${BaseColor.color_apptheme}

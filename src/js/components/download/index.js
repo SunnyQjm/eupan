@@ -4,7 +4,7 @@ import {
     FontSize
 } from '../../base/size'
 import {
-    BigTitle,
+    BigTitleP,
     LightGayP
 } from '../../base/components'
 import {
@@ -44,7 +44,7 @@ class DownloadPage extends React.Component {
         return (
             <QueueAnim type={'bottom'}>
                 <DownloadPageBody key={1}>
-                    <BigTitle>优云</BigTitle>
+                    <BigTitleP>优云</BigTitleP>
                     <CenterNormalP>提取码&nbsp;&nbsp;|&nbsp;&nbsp;传输文件&nbsp;&nbsp;|&nbsp;&nbsp;搜资源&nbsp;&nbsp;|&nbsp;&nbsp;分享文件&nbsp;&nbsp;|&nbsp;&nbsp;关注人</CenterNormalP>
                     <DownloadComponent key={3} downloadFile={downloadFile}/>
                     <WaveImg src={require('../../../icon/wave.png')} responsive/>

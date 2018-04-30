@@ -9,7 +9,12 @@ import {
     checkUploadFile,
     uploadFile
 } from './upload'
-
+import {
+    getForumFiles,
+    getFileDetail,
+    getComments,
+    getFollowUserShareFiles
+} from './FileForum';
 
 export {
     getEncryptMessageBeforeDownload,
@@ -18,4 +23,8 @@ export {
     getUploadParamBody,
     checkUploadFile,
     uploadFile,
+    getComments,
+    getFileDetail,
+    getFollowUserShareFiles,
+    getForumFiles
 }

@@ -16,6 +16,7 @@ const BigTitle = styled(BaseSpanWithFontFamily)`
 const BrandBody = styled.div`
     display: inline-flex;
     align-items: center;
+    width: 180px;
 `;
 
 class EupanBrand extends React.Component {

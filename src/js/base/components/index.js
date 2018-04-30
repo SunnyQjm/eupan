@@ -7,10 +7,12 @@ import {
 } from 'antd'
 const base_font_family = '""宋体", DFKai-SB", "STKaiti","Microsoft YaHei","黑体",sans-serif';
 const BasePWithFontFamily = styled.p`
+    font-size: 1em;
     font-family: ${base_font_family};    
 `;
 
 const BaseSpanWithFontFamily = styled.span`
+    font-size: 1em;
     font-family: ${base_font_family};    
 `;
 
@@ -27,6 +29,14 @@ const GrayP = styled(BasePWithFontFamily)`
     color:${BaseColor.gray};
 `;
 
+const TextGrayP = styled(BasePWithFontFamily)`
+    color: ${BaseColor.color_text_gray};
+    margin: 0;
+`;
+
+const LitleTextGrayP = styled(TextGrayP)`
+    font-size: ${FontSize.FONT_SIZE_LITTLE}
+`;
 
 const BaseAppThemeButton = styled(Button)`
     border: none;
@@ -44,11 +54,18 @@ const BaseAppThemeButton = styled(Button)`
     }    
 `;
 
-const BigTitle = styled(GrayP)`
+const BaseGrayTitle = styled(GrayP)`
+    font-size: ${FontSize.FONT_SIZE_TITLE}
+    margin: 0;
+`;
+
+
+const BigTitleP = styled(GrayP)`
     font-size: ${FontSize.FONT_SIZE_SUPER_BIG_TITLE}
     text-align: center;
     width: 100%;
 `;
+
 
 export {
     BaseSpanWithFontFamily,
@@ -58,5 +75,8 @@ export {
     GreyP,
     base_font_family,
     BaseAppThemeButton,
-    BigTitle,
+    BigTitleP,
+    BaseGrayTitle,
+    TextGrayP,
+    LitleTextGrayP
 }
