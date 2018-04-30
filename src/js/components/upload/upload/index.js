@@ -6,9 +6,9 @@ import {
     BaseAppThemeButton
 } from '../../../base/components'
 import BaseColor from '../../../base/color';
-import {Progress, Radio, DatePicker, InputNumber, Input} from 'antd';
+import {Radio, DatePicker, InputNumber, Input, message} from 'antd';
 import moment from 'moment'
-import browserMD5File from 'browser-md5-file';
+import UploadItem from '../upload_item';
 import {
     Link
 } from 'react-router-dom'
@@ -39,7 +39,6 @@ const UploadDraggerBody = styled.div`
     background-color: ${BaseColor.color_light_grey};
     margin: 0 auto;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     position: relative;
@@ -51,7 +50,8 @@ const UploadTipDeepLabel = styled(GrayP)`
 `;
 
 const UploadPCAndText = styled.div`
-    margin: 30px;
+    margin-top: 60px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,8 +60,9 @@ const UploadPCAndText = styled.div`
 
 const UploadInput = styled.input`
     position: absolute;
+    margin-top: 25px;
     width: 100%;
-    height: 100%;
+    height: 150px;
     background-color: red;
     opacity: 0;
     cursor: pointer;
@@ -69,10 +70,6 @@ const UploadInput = styled.input`
 
 const ProgressBar = styled.div`
     width: 70%;
-`;
-
-const UploadFiles = styled(GrayP)`
-    // text-align: center;
 `;
 
 const UploadSettingBody = styled.div`
@@ -139,6 +136,10 @@ class UploadComponent extends React.Component {
     }
 
     handleFileSelect(e) {
+        if(this.props.uploading){
+            message.info('正在上传，请等待上传完成');
+            return;
+        }
         let {selectFile} = this.props.uploadProps;
         let files = this.uploadInput.files;
         if (files.length <= 0)
@@ -163,7 +164,12 @@ class UploadComponent extends React.Component {
             updateState({
                 showDatePicker: false
             });
-            this.handleSettingOptionsChange(e);
+            this.handleSettingOptionsChange({
+                target: {
+                    name: e.target.name,
+                    value: parseInt(e.target.value) + new Date().getTime()
+                }
+            });
         } else if (value === -2) {
             updateState({
                 showDatePicker: true
@@ -228,30 +234,35 @@ class UploadComponent extends React.Component {
 
     render() {
         let {width, selectedFiles, showDatePicker, allowDownloadCountInputDisable, uploadOptions, uploading,
-            uploadProgress} = this.props.uploadProps;
-        console.log('selectFiles: ' + selectedFiles);
+            uploadProgress, identifyCodes} = this.props.uploadProps;
         return (
             <UploadComponentBody style={{
                 width: width,
             }}>
                 <UploadLabel>上传</UploadLabel>
-                <CenterGreyP>你还未登陆，点此 <Link to='#'>登陆上传</Link></CenterGreyP>
+                <CenterGreyP>你还未登陆，点此 <Link to='#' disabled>登陆上传</Link></CenterGreyP>
                 <UploadDraggerBody>
+                    <UploadInput type={'file'} multiple onChange={this.handleFileSelect} innerRef={x => {
+                        this.uploadInput = x;
+                    }} disabled={uploading} />
                     <UploadPCAndText>
                         <img src={icon_pc}/>
                         <UploadTipDeepLabel>支持文件拖拽上传</UploadTipDeepLabel>
                     </UploadPCAndText>
-                    <UploadInput type={'file'} multiple onChange={this.handleFileSelect} innerRef={x => {
-                        this.uploadInput = x;
-                    }}/>
+
                     <ProgressBar>
                         {
                             selectedFiles.map((file, index) => {
                                 return (
-                                    <div>
-                                        <Progress percent={uploadProgress[index]} width={50} strokeWidth={15}/>
-                                        <UploadFiles>{file}</UploadFiles>
-                                    </div>
+                                    <UploadItem progress={uploadProgress[index]} fileName={file} identifyCode={identifyCodes[index]}/>
+                                    // <div>
+                                    //     <Progress percent={uploadProgress[index]} width={50} strokeWidth={15}/>
+                                    //     <UploadFiles>{file}&nbsp;&nbsp;&nbsp;提取码：
+                                    //         {identifyCodes[index] ?
+                                    //             <a>{identifyCodes[index]}</a>
+                                    //             : ''}</UploadFiles>
+                                    // </div>
+
                                 )
                             })
                         }
@@ -271,9 +282,9 @@ class UploadComponent extends React.Component {
                         <RadioGroup name={UploadParams.expireTime} defaultValue={-1}
                                     onChange={this.handleExpireTimeChange}>
                             <BoldText>有效时间</BoldText>
-                            <MyRadio value={24 * 60 * 60 * 1000 + (new Date()).getTime()}>一天</MyRadio>
-                            <MyRadio value={24 * 60 * 60 * 1000 * (new Date()).getTime()}>一周</MyRadio>
-                            <MyRadio value={24 * 60 * 60 * 1000 * (new Date()).getTime()}>30天</MyRadio>
+                            <MyRadio value={24 * 60 * 60 * 1000}>一天</MyRadio>
+                            <MyRadio value={24 * 60 * 60 * 1000 * 7}>一周</MyRadio>
+                            <MyRadio value={24 * 60 * 60 * 1000 * 30}>30天</MyRadio>
                             <MyRadio value={-1}>永久</MyRadio>
                             <br/>
                             <BoldText/>

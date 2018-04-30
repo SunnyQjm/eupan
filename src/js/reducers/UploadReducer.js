@@ -4,7 +4,8 @@ import {
     ACTION_TYPE_UPDATE_STATE,
     ACTION_TYPE_UPLOAD_SUCCESS,
     ACTION_TYPE_UPLOAD_ERR,
-    ACTION_TYPE_UPLOAD_PROGRESS
+    ACTION_TYPE_UPLOAD_PROGRESS,
+    ACTION_TYPE_BEGIN_UPLOAD,
 } from '../model/ActionType'
 import {
     UploadParams
@@ -19,7 +20,7 @@ initUploadOptions[UploadParams.score] = 0;
 const initState={
     selectedFiles: [],
     uploadProgress: [],
-
+    identifyCodes: [],
     uploadOptions: initUploadOptions,
     showDatePicker: false,
     allowDownloadCountInputDisable: true,
@@ -31,6 +32,11 @@ const UploadReducer = (state = initState, action) =>{
     switch (action.type){
         case ACTION_TYPE_UPLOAD_SELECT_FILE:
             newState.selectedFiles = action.data;
+            newState.identifyCodes = [];
+            newState.uploadProgress = [];
+            break;
+        case ACTION_TYPE_BEGIN_UPLOAD:
+            newState.uploading = true;
             break;
         case ACTION_TYPE_UPLOAD_OPTIONS_CHANGE:
             let uploadOptions = Object.assign({}, state.uploadOptions);
@@ -43,7 +49,6 @@ const UploadReducer = (state = initState, action) =>{
             Object.assign(newState, action.data);
             break;
         case ACTION_TYPE_UPLOAD_ERR:
-
             break;
         case ACTION_TYPE_UPLOAD_PROGRESS:
             let [...progress] = state.uploadProgress;
@@ -53,6 +58,11 @@ const UploadReducer = (state = initState, action) =>{
             });
             break;
         case ACTION_TYPE_UPLOAD_SUCCESS:
+            let [...identifyCodes] = state.identifyCodes;
+            identifyCodes[action.index] = action.data.identifyCode;
+            if(identifyCodes.length === newState.selectedFiles.length)
+                newState.uploading = false;
+            newState.identifyCodes = identifyCodes;
             break;
     }
     return newState;

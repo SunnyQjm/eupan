@@ -11,6 +11,7 @@ import {
     ACTION_TYPE_UPLOAD_PROGRESS,
     ACTION_TYPE_UPLOAD_ERR,
     ACTION_TYPE_UPLOAD_SUCCESS,
+    ACTION_TYPE_BEGIN_UPLOAD,
 } from '../model/ActionType'
 
 import {
@@ -51,10 +52,7 @@ export default connect(
             },
             uploadFile: async (files, params) => {
                 dispatch({
-                    type: ACTION_TYPE_UPDATE_STATE,
-                    data: {
-                        uploading: true
-                    }
+                    type: ACTION_TYPE_BEGIN_UPLOAD,
                 });
                 for (let i = 0; i < files.length; i++) {
                     let paramBody = await getUploadParamBody(files[i], params);
@@ -65,9 +63,9 @@ export default connect(
                             index: i
                         });
                     }).then(data => {
-                        console.log(data);
                         dispatch({
                             type: ACTION_TYPE_UPLOAD_SUCCESS,
+                            index: i,
                             data: data,
                         })
                     }).catch(err => {

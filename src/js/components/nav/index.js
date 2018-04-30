@@ -16,7 +16,9 @@ import {
 } from '../../base/components'
 import BaseColor from '../../base/color'
 import MediaQuery from 'react-responsive'
-
+import {
+    Tooltip
+} from 'antd';
 import EupanBrand from './brand'
 import SearchInput from './search'
 import logo from '../../../icon/logo.png'
@@ -108,8 +110,8 @@ class EupanNav extends React.Component {
             </TabLink>
             <TabLink myKey={4} to={LocalRoute.FILE_MANAGER} activeStyle={linkActiveStyle} onClick={() => {
                 selectBar(4)
-            }}>
-                我的文件
+            }} disabled>
+                    我的文件
             </TabLink>
         </MyNav>;
         return (
@@ -148,12 +150,12 @@ class EupanNav extends React.Component {
                         </Dropdown>
                     </MediaQuery>
 
-                    <a href="#"><NormalSpan>登录</NormalSpan></a>
+                    <a href="#" disabled><NormalSpan>登录</NormalSpan></a>
                     <span style={{
                         paddingLeft: '15px',
                         paddingRight: '15px'
                     }}> | </span>
-                    <a href="#"><NormalSpan>注册</NormalSpan></a>
+                    <a href="#" disabled><NormalSpan>注册</NormalSpan></a>
 
                 </NavBarContainer>
             </HeaderBody>
