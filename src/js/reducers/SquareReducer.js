@@ -1,6 +1,7 @@
 import {
     ACTION_TYPE_SQUARE_LOAD_FINISH,
-    ACTION_TYPE_SQUARE_LOAD
+    ACTION_TYPE_SQUARE_LOAD,
+    ACTION_TYPE_CHANGE_CATEGORY
 } from '../model/ActionType'
 
 let initState = {
@@ -10,6 +11,7 @@ let initState = {
     hot: false,
     loading: false,
     files: [],
+    category: 'all'
 };
 const SquareReducer = (state = initState, action) => {
     let newState = {};
@@ -30,6 +32,16 @@ const SquareReducer = (state = initState, action) => {
                 newState.files = newState.files.concat(action.data);
             }
             newState.loading = false;
+            break;
+        case ACTION_TYPE_CHANGE_CATEGORY:
+            newState.category = action.category;
+            if(action.category === 'all'){
+                newState.time = true;
+                newState.hot = false;
+            } else if(action.category === 'hot'){
+                newState.time = false;
+                newState.hot = true;
+            }
             break;
         default:
             break;

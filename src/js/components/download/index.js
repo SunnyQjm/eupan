@@ -1,9 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
 import {
-    FontSize
-} from '../../base/size'
-import {
     BigTitleP,
     LightGayP
 } from '../../base/components'
@@ -11,7 +8,6 @@ import {
     Image
 } from 'react-bootstrap';
 import BaseColor from '../../base/color';
-
 import DownloadComponent from './download'
 import QueueAnim from 'rc-queue-anim';
 

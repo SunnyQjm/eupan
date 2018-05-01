@@ -1,9 +1,32 @@
-import EupanNav from './nav';
-import UploadPage from './upload';
-import DownloadPage from './download';
-import SquareComponent from './square';
-import FileManagerComponent from './filemanager';
-import FooterComponent from './footer';
+import Loadable from 'react-loadable';
+import {Spin} from 'antd';
+import React from 'react';
+const Loading = () => <Spin size={'larger'}/>;
+
+const EupanNav = Loadable({
+    loader: () => import('./nav'),
+    loading: Loading
+});
+const UploadPage = Loadable({
+    loader: () => import('./upload'),
+    loading: Loading
+});
+const DownloadPage = Loadable({
+    loader: () => import('./download'),
+    loading: Loading
+});
+const SquareComponent = Loadable({
+    loader: () => import('./square'),
+    loading: Loading
+});
+const FileManagerComponent = Loadable({
+    loader: () => import('./filemanager'),
+    loading: Loading
+});
+const FooterComponent = Loadable({
+    loader: () => import('./footer'),
+    loading: Loading
+});
 
 
 export {

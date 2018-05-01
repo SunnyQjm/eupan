@@ -2,6 +2,9 @@ import React from "react";
 import TweenOne from 'rc-tween-one'
 import BaseColor from '../../../base/color'
 import 'font-awesome/css/font-awesome.css'
+import {
+    message
+} from 'antd';
 
 
 class SearchInput extends React.Component {
@@ -64,6 +67,14 @@ class SearchInput extends React.Component {
         });
     }
 
+    dealKeyUp(e){
+
+        switch (e.keyCode) {
+            case 13:
+                message.info('前端小哥正在删库跑路...');
+                break;
+        }
+    }
     render() {
         let open = this.state.open;
         let inputFocus = this.state.inputFocus;
@@ -82,9 +93,9 @@ class SearchInput extends React.Component {
         />;
 
         let inputStyle = open ? inputFocus ? onInputFocusStyle : openInputStyle : closing ? openInputStyle : closeInputStyle;
-        let input = <input key={2} style={inputStyle} type='search' placeholder={this.props.placeholder}
+        let input = <input key={2} type={'text'} style={inputStyle} placeholder={this.props.placeholder}
                            className='eupan-search-input' onFocus={this.onInputFocus} onBlur={this.onInputBlur}
-                           id='mdzz' autoFocus/>;
+                           id='mdzz' autoFocus onKeyUp={this.dealKeyUp}/>;
         return (
             <form style={this.props.style} className={this.props.className + ' eupan-search-input-body'}>
                 {open ?

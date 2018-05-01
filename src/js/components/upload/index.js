@@ -1,5 +1,4 @@
 import React from "react";
-
 import styled from 'styled-components';
 import UploadComponent from './upload'
 import QueueAnim from 'rc-queue-anim';

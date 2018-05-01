@@ -6,7 +6,8 @@ import {
 } from '../components'
 import {
     ACTION_TYPE_SQUARE_LOAD_FINISH,
-    ACTION_TYPE_SQUARE_LOAD
+    ACTION_TYPE_SQUARE_LOAD,
+    ACTION_TYPE_CHANGE_CATEGORY
 } from '../model/ActionType'
 import {getForumFiles, getFollowUserShareFiles, downloadFile as DownloadFileApi} from '../model/EupanApi';
 
@@ -45,6 +46,12 @@ export default connect(
                     })
                 }
             },
+            changeCategory: (category) => {
+                dispatch({
+                    type: ACTION_TYPE_CHANGE_CATEGORY,
+                    category: category
+                })
+            }
         }
     },
 )(SquareComponent)

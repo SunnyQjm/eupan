@@ -1,6 +1,6 @@
 import React from 'react';
 import es6 from'es6-shim';      //md,有些浏览器还不支持es6
-import './App.css';
+import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import {
     BrowserRouter as Router,
     Route,
@@ -8,14 +8,12 @@ import {
 } from 'react-router-dom';
 import LocalRoute from './js/model/LocalRoute';
 import {
-
     FooterComponent
 } from './js/components'
 import {
     HeaderContainer,
     DownloadContainer,
     UploadContainer,
-
     SquareContainer,
     FileManagerContainer
 } from './js/container'
@@ -25,7 +23,6 @@ import BaseColor from './js/base/color';
 import {
     Provider
 } from 'react-redux'
-
 
 const AppBody = styled.div`
     height: 100%;
@@ -42,10 +39,6 @@ const FlexFillItem = styled.span`
 
 const Header = styled(HeaderContainer)`
     flex: 0 0 auto;
-`;
-
-const FlexSwitch = styled(Switch)`
-    
 `;
 const App = () => (
     <Provider store={store}>

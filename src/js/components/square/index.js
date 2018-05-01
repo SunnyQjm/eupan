@@ -33,6 +33,10 @@ const CategoryItemText = styled(TextGrayP)`
     }
 `;
 
+const CategoryItemTextSelected = styled(CategoryItemText)`
+    color: ${BaseColor.color_apptheme}
+`;
+
 const SquareItemsBody = styled.div`
     padding: 20px 0px;
 `;
@@ -47,12 +51,16 @@ class SquareComponent extends React.Component {
         this.loading = false;
     }
 
-    componentDidMount() {
+    refresh(){
         let {load} = this.props;
         load(this.props, true);
+    }
+
+    componentDidMount() {
+        this.refresh();
         let t;
         EventUtil.addHandler(window, 'scroll', (e) => {
-            if(!!t)
+            if (!!t)
                 clearTimeout(t);
             t = setTimeout(() => {
                 this.tryScrollLoadMore();
@@ -70,11 +78,16 @@ class SquareComponent extends React.Component {
      * @returns {boolean}
      */
     judgeIsNeedLoadMore() {
+        console.log(this.props.loading.toString() + ", " + this.loading.toString());
+        console.log(this.lastItem);
+        console.log(this.squareItemsBody);
+        console.log(this.squareBody);
         if (!this.props.loading && !this.loading && !!this.lastItem
-            && !!this.squareBody && !!this.squareItemsBody && !this.props.loading) {
+            && !!this.squareBody && !!this.squareItemsBody) {
             let visibleBottom = document.documentElement.scrollTop || document.body.scrollTop;
             visibleBottom += (document.documentElement.clientHeight || document.body.clientHeight);
             let lastItemTop = this.lastItem.offsetTop + this.squareBody.offsetTop + this.squareItemsBody.offsetTop;
+            console.log(visibleBottom + ', ' + lastItemTop);
             return (visibleBottom > lastItemTop);
         }
         return false;
@@ -84,10 +97,11 @@ class SquareComponent extends React.Component {
         let {load, page, size, hot, time} = this.props;
         page += 1;
         await load({page, size, hot, time}, false);
+        this.loading = false;
     }
 
     tryScrollLoadMore() {
-        if(this.judgeIsNeedLoadMore()){
+        if (this.judgeIsNeedLoadMore()) {
             this.loading = true;
             this.loadMore();
         }
@@ -100,18 +114,27 @@ class SquareComponent extends React.Component {
         }
     }
 
-    componentDidUpdate(preProps, preState, snap) {
-        this.tryLoadMore();
-        this.loading = this.props.loading;
-    }
-
     downFile(identifyCode) {
         let {downloadFile} = this.props;
         downloadFile(identifyCode, this.downloadForm.current);
     }
 
+    componentDidUpdate(preProps, preState, snap) {
+        if(preProps.category === this.props.category){
+            this.tryLoadMore();
+        } else {
+            this.refresh();
+        }
+    }
+
+
+    selectCategory(category) {
+        let {changeCategory} = this.props;
+        changeCategory(category);
+    }
+
     render() {
-        let {files, showFile} = this.props;
+        let {files, showFile, category} = this.props;
         let listItems;
         if (!!files) {
             listItems = files.map((item, index) =>
@@ -120,6 +143,10 @@ class SquareComponent extends React.Component {
                                 fileInfo={item} showFile={showFile} width={350}
                                 downloadFile={this.downFile}
                                 innerRef={x => {
+                                    if(x === null) {
+                                        this.tryLoadMore();
+                                        return;
+                                    }
                                     this.lastItem = x;
                                     if (index === files.length - 1) {
                                         this.tryLoadMore();
@@ -135,8 +162,14 @@ class SquareComponent extends React.Component {
                 <iframe name="download_target" ref={'catch_result'}
                         style={{height: 0, width: 0}}/>
                 <CategoryBody>
-                    <CategoryItemText>全部</CategoryItemText>
-                    <CategoryItemText>热门</CategoryItemText>
+                    {category === 'all' ? <CategoryItemTextSelected>全部</CategoryItemTextSelected> :
+                        <CategoryItemText onClick={()=>{
+                            this.selectCategory('all');
+                        }}>全部</CategoryItemText>}
+                    {category === 'hot' ? <CategoryItemTextSelected>热门</CategoryItemTextSelected> :
+                        <CategoryItemText onClick={()=>{
+                            this.selectCategory('hot');
+                        }}>热门</CategoryItemText>}
                 </CategoryBody>
                 <SquareItemsBody innerRef={x => {
                     this.squareItemsBody = x;

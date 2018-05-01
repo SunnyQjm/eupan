@@ -124,9 +124,9 @@ class SquireItem extends React.Component {
                 <FileCreateTime>{new Date(fileInfo.createTime).toLocaleTimeString()}</FileCreateTime>
                 <FileDataInfo>
                     <LitleTextGrayP>
-                        <a>赞</a>({fileInfo.star})
+                        <a disabled>赞</a>({fileInfo.star})
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a>评论</a>(2)
+                        <a disabled>评论</a>(2)
                         &nbsp;&nbsp;|&nbsp;&nbsp;
                         <a onClick={this.downFile}>下载</a>({fileInfo.downloadCount})
                     </LitleTextGrayP>

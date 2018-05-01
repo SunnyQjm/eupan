@@ -16,9 +16,6 @@ import {
 } from '../../base/components'
 import BaseColor from '../../base/color'
 import MediaQuery from 'react-responsive'
-import {
-    Tooltip
-} from 'antd';
 import EupanBrand from './brand'
 import SearchInput from './search'
 import logo from '../../../icon/logo.png'
