@@ -244,7 +244,7 @@ class UploadComponent extends React.Component {
                 <UploadDraggerBody>
                     <UploadInput type={'file'} multiple onChange={this.handleFileSelect} innerRef={x => {
                         this.uploadInput = x;
-                    }} disabled={uploading} />
+                    }} disabled={uploading} capture="camera"/>
                     <UploadPCAndText>
                         <img src={icon_pc}/>
                         <UploadTipDeepLabel>支持文件拖拽上传</UploadTipDeepLabel>

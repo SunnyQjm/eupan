@@ -1,5 +1,5 @@
-// const baseUrl = 'http://eda.eupan.top:8080/youyun';
-const baseUrl = 'http://dut.eupan.club:9748/youyun';
+const baseUrl = 'http://eda.eupan.top:8080/youyun';
+// const baseUrl = 'http://dut.eupan.club:9748/youyun';
 const UploadParams={
     share: 'share',
     leftAllowDownloadCount: 'leftAllowDownloadCount',

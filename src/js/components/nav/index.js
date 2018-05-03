@@ -5,6 +5,9 @@ import {
     MenuItem,
 } from 'react-bootstrap'
 import {
+    Tooltip
+} from 'antd';
+import {
     NavLink
 } from 'react-router-dom'
 import {
@@ -37,6 +40,12 @@ const MyNav = styled.div`
 
 const NormalSpan = styled(BaseSpanWithFontFamily)`
     font-size: ${FontSize.FONT_SIZE_TAB_LINK};
+`;
+
+const AndroidIcon = styled(NormalSpan)`
+    margin: 0 20px;
+    cursor: pointer;
+    
 `;
 const TabLink = styled(NavLink)`
     font-size: ${FontSize.FONT_SIZE_TAB_LINK};
@@ -108,7 +117,7 @@ class EupanNav extends React.Component {
             <TabLink myKey={4} to={LocalRoute.FILE_MANAGER} activeStyle={linkActiveStyle} onClick={() => {
                 selectBar(4)
             }} disabled>
-                    我的文件
+                我的文件
             </TabLink>
         </MyNav>;
         return (
@@ -122,6 +131,9 @@ class EupanNav extends React.Component {
                     </MediaQuery>
 
                     <FlexFillItem/>
+                    <Tooltip title={'点击下载优云app'}>
+                        <AndroidIcon> <a href='http://app.flyme.cn/apps/public/detail?package_name=com.j.ming.eupanv2'><i key={1} className="fa fa-android"/></a></AndroidIcon>
+                    </Tooltip>
                     <MediaQuery minWidth={570}>
                         <SearchInput className={'search-input'} expandWidth={200} placeholder={'文件名/用户名/手机号'} style={{
                             marginRight: '20px'
@@ -146,7 +158,6 @@ class EupanNav extends React.Component {
                             </Dropdown.Menu>
                         </Dropdown>
                     </MediaQuery>
-
                     <a href="#" disabled><NormalSpan>登录</NormalSpan></a>
                     <span style={{
                         paddingLeft: '15px',
