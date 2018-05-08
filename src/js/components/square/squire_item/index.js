@@ -49,6 +49,9 @@ const FileDescription = styled(TextGrayP)`
     margin-top: 10px;
 `;
 
+const FileSize = styled(TextGrayP)`
+`;
+
 const FileContentBody = styled.div`
     display: flex;
     
@@ -74,7 +77,7 @@ const FileCreateTime = styled(LitleTextGrayP)`
 `;
 
 /**
- * 文件的数据信心，点赞数，下载量什么的
+ * 文件的数据信息，点赞数，下载量什么的
  * @type {StyledComponentClass<JSX.IntrinsicElements["div"], any, JSX.IntrinsicElements["div"]>}
  */
 const FileDataInfo = styled.div`
@@ -107,6 +110,7 @@ class SquireItem extends React.Component {
                         src={getIconByMIME(fileInfo.mime)}/>
                     <FileTitleAndDescription>
                         <FileNameText>{fileInfo.name}</FileNameText>
+                        <FileSize>{FormatSize(fileInfo.size)}</FileSize>
                         <FileDescription>{fileInfo.description}</FileDescription>
                     </FileTitleAndDescription>
                 </FileContentBody>
@@ -134,6 +138,21 @@ class SquireItem extends React.Component {
             </SquireItemBody>
         )
     }
+}
+
+/**
+ * @return {string}
+ */
+function FormatSize (fileSize) {
+    const arrUnit = ["B", "K", "M", "G", "T", "P"];
+    let powerIndex = Math.log2(fileSize) / 10;
+    powerIndex = Math.floor(powerIndex);
+    // index should in the unit range!
+    const len = arrUnit.length;
+    powerIndex = powerIndex < len ? powerIndex : len - 1;
+    let sizeFormatted = fileSize / Math.pow(2, powerIndex * 10);
+    sizeFormatted = sizeFormatted.toFixed(2);
+    return sizeFormatted + " " + arrUnit[powerIndex];
 }
 
 SquireItem.defaultProps = {
