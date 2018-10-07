@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{355:function(n,o,c){"use strict";c.r(o);var e=c(183),t=c(67),u=c(66),a=c(201);c(4);o.default=Object(t.b)(function(n){return Object(e.a)({},n.DownloadReducer)},function(n){return{downloadFile:function(n,o){Object(a.a)(n,o,function(){console.log("download success")},function(n){console.log("download err: "+n)})}}})(u.a)}}]);
+//# sourceMappingURL=14.f2ad0e2a.chunk.js.map
