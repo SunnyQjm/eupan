@@ -25,7 +25,7 @@ import {
 axios.interceptors.response.use(response => {
     if (response.data.success) {
         return response.data.data;
-    } else {
+    } else if (response.data.msg !== 'Index: 0, Size: 0') {
         message.error(response.data.msg);
     }
 }, error => {

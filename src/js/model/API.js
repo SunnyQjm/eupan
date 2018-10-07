@@ -1,5 +1,6 @@
 // const baseUrl = 'http://eda.eupan.top:8080/youyun';
-const baseUrl = 'http://upan.qjm253.cn:9748/youyun';
+const baseUrl = 'https://upan.qjm253.cn/api/';
+// const baseUrl = 'http://138.68.247.232:9748/youyun';
 // const baseUrl = 'http://dut.eupan.club:9748/youyun';
 const UploadParams={
     share: 'share',
