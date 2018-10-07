@@ -16,8 +16,8 @@ self.__precacheManifest = [
     "url": "/eupan/static/js/3.37bcdc9f.chunk.js"
   },
   {
-    "revision": "5dd2f150ed0e17fe1500",
-    "url": "/eupan/static/js/4.5dd2f150.chunk.js"
+    "revision": "0bce2245f10306047554",
+    "url": "/eupan/static/js/4.0bce2245.chunk.js"
   },
   {
     "revision": "e79ef1db31099d5ea75e",
@@ -92,8 +92,8 @@ self.__precacheManifest = [
     "url": "/eupan/static/js/19.800ef1bd.chunk.js"
   },
   {
-    "revision": "fee66e712a8a08eef5805a46892932ad",
-    "url": "/eupan/static/media/fontawesome-webfont.fee66e71.woff"
+    "revision": "af7ae505a9eed503f8b8e6982036873e",
+    "url": "/eupan/static/media/fontawesome-webfont.af7ae505.woff2"
   },
   {
     "revision": "4b8d0cb44b3e27e72312",
@@ -104,16 +104,16 @@ self.__precacheManifest = [
     "url": "/eupan/static/js/21.e9fcf9b7.chunk.js"
   },
   {
-    "revision": "59497d987b7d0f6ca13a",
-    "url": "/eupan/static/js/runtime~main.59497d98.js"
+    "revision": "8052cd8f9d11e145042b",
+    "url": "/eupan/static/js/runtime~main.8052cd8f.js"
   },
   {
     "revision": "674f50d287a8c48dc19ba404d20fe713",
     "url": "/eupan/static/media/fontawesome-webfont.674f50d2.eot"
   },
   {
-    "revision": "af7ae505a9eed503f8b8e6982036873e",
-    "url": "/eupan/static/media/fontawesome-webfont.af7ae505.woff2"
+    "revision": "fee66e712a8a08eef5805a46892932ad",
+    "url": "/eupan/static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
     "revision": "b06871f281fee6b241d60582ae9369b9",
@@ -136,7 +136,7 @@ self.__precacheManifest = [
     "url": "/eupan/static/css/18.7b82bd74.chunk.css"
   },
   {
-    "revision": "5f427ff05d6690541d905bbb93c19cd9",
+    "revision": "fa27bf6e92d6923a1b011bb435577528",
     "url": "/eupan/index.html"
   }
 ];
