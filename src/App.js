@@ -42,7 +42,8 @@ const Header = styled(HeaderContainer)`
 `;
 const App = () => (
     <Provider store={store}>
-        <Router>
+        <Router
+            basename={process.env.PUBLIC_URL}>
             <AppBody>
                 <Header/>
                 <FlexFillItem>
